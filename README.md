@@ -171,6 +171,8 @@ python eval.py {model_id} {input_file} {output_path}
 | SALMONN-7B | 27 | 48 | 25 |
 | Qwen2-Audio-Instruct-7B | 13 | 56 | 31 |
 
+<img src="dependence.png" alt="ser_sed" style="width: 80%; min-width: 300px; display: block; margin: auto;">
+
 ## **Cite Joint Audio-Speech Co-Reasoning and What Are They Doing dataset**
 
 <!-- ```bibtex
