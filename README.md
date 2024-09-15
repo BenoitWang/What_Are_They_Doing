@@ -16,7 +16,9 @@ The What Are They Doing dataset is an open-ended scene reasoning question-answer
 2. The correct answer is based on both audio and speech, using one single modality leads to Audio-Oriented or Speech-Oriented Answer.
 3. The correct answer requires a deep reasoning rather than a concatenation of information.
 4. The audio information and speech information are irrelevant.
+
 The dataset can be found in the `dataset` folder with the designed answers in the csv file. 
+
 Listen to the audio clips and make a guess yourself before checking the answers 😆.
 
 ## Inference with ALLMs
@@ -36,9 +38,13 @@ What does the speaker say? What sound can you hear? Guess what activity the spea
 ```
 
 We refered to the following inference code provided in each repo:
+
 LTU-AS: https://github.com/YuanGongND/ltu?tab=readme-ov-file#option-2-inference-with-api-no-gpu-needed
+
 SALMONN: https://huggingface.co/tsinghua-ee/SALMONN-7B#how-to-inference-in-cli
+
 QWEN2: https://huggingface.co/Qwen/Qwen2-Audio-7B-Instruct#audio-analysis-inference
+
 WavLLM: https://github.com/microsoft/SpeechT5/tree/main/WavLLM#inference
 
 ## Evaluation
@@ -138,8 +144,7 @@ To run the evaluation code, first install the dependencies
 ```
 pip install -r requirements.txt
 ```
-
-example.csv
+Please first do inference yourself for your own ALLM and organize your outputs within a csv file such as `/evaluation/example.csv`, then run the evaluation:
 ```
 cd evaluation/
 python eval.py {model_id} {input_file} {output_path}
@@ -149,6 +154,7 @@ python eval.py {model_id} {input_file} {output_path}
 
 ## Benchmark Results
 1. Model judge best-mean:
+
 | model | best-mean |
 |:---------------------------:|:-----------:|
 | WavLLM-7B | 0.49 |
@@ -157,6 +163,7 @@ python eval.py {model_id} {input_file} {output_path}
 | Qwen2-Audio-Instruct-7B | 1.38 |
 
 2. Modality-Dependence
+
 | model | Audio-Dependence% | Both-Dependence% | Speech-Dependence% |
 |:---------------------------:|:-------------------:|:-------------------:|:-------------------:|
 | WavLLM-7B | 9 | 17 | 74 |
@@ -164,7 +171,7 @@ python eval.py {model_id} {input_file} {output_path}
 | SALMONN-7B | 27 | 48 | 25 |
 | Qwen2-Audio-Instruct-7B | 13 | 56 | 31 |
 
-## **About Joint Audio-Speech Co-Reasoning and What Are They Doing dataset**
+## **Cite Joint Audio-Speech Co-Reasoning and What Are They Doing dataset**
 
 <!-- ```bibtex
 @article{wang2023speech,
