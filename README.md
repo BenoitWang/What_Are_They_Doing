@@ -8,7 +8,7 @@
 [![Code License](https://img.shields.io/badge/Code%20License-Apache_2.0-green.svg)](https://https://github.com/BenoitWang/What_Are_They_Doing/blob/main/LICENSE)
 [![Data License](https://img.shields.io/badge/Data%20License-CC%20By%20NC%204.0-red.svg)](https://https://github.com/BenoitWang/What_Are_They_Doing/blob/main/DATA_LICENSE)
 
-This repo contains a benchmark of popular Auditory Large Language Models (ALLMs) on the [Joint Audio-Speech Co-Reasoning (JASCO)] task, which is a joint audio-speech task that requires a strict co-reasoning based on both audio and speech.
+This repo contains a benchmark of popular Auditory Large Language Models (ALLMs) on the [Joint Audio-Speech Co-Reasoning (JASCO)](https://arxiv.org/abs/2409.14526) task, which is a joint audio-speech task that requires a strict co-reasoning based on both audio and speech.
 
 ## What Are They Doing dataset
 The What Are They Doing dataset is an open-ended scene reasoning question-answering dataset, where the models need to understand both audio and speech and reason what the speakeres are possibly doing. It contains 80 carefully-designed audio clips and QA pairs. The main features of the dataset are:
