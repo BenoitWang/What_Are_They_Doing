@@ -175,11 +175,11 @@ python eval.py {model_id} {input_file} {output_path}
 
 ## **Cite Joint Audio-Speech Co-Reasoning and What Are They Doing dataset**
 
-<!-- ```bibtex
-@article{wang2023speech,
-  title={Speech Emotion Diarization: Which Emotion Appears When?},
-  author={Wang, Yingzhi and Ravanelli, Mirco and Nfissi, Alaa and Yacoubi, Alya},
-  journal={arXiv preprint arXiv:2306.12991},
-  year={2023}
+```bibtex
+@article{wang2024they,
+  title={What Are They Doing? Joint Audio-Speech Co-Reasoning},
+  author={Wang, Yingzhi and Mousavi, Pooneh and Ploujnikov, Artem and Ravanelli, Mirco},
+  journal={arXiv preprint arXiv:2409.14526},
+  year={2024}
 }
-``` -->
+```
