@@ -8,21 +8,29 @@
 [![Code License](https://img.shields.io/badge/Code%20License-Apache_2.0-green.svg)](https://https://github.com/BenoitWang/What_Are_They_Doing/blob/main/LICENSE)
 [![Data License](https://img.shields.io/badge/Data%20License-CC%20By%20NC%204.0-red.svg)](https://https://github.com/BenoitWang/What_Are_They_Doing/blob/main/DATA_LICENSE)
 
-This repo contains a benchmark of popular Auditory Large Language Models (ALLMs) on the [Joint Audio-Speech Co-Reasoning (JASCO)](https://arxiv.org/abs/2409.14526) task, which is a joint audio-speech task that requires a strict co-reasoning based on both audio and speech.
+This repo contains a benchmark of Auditory Large Language Models (ALLMs) on the [Joint Audio-Speech Co-Reasoning (JASCO)](https://arxiv.org/abs/2409.14526) task, which requires a strict co-reasoning based on both audio and speech.
 
 ## What Are They Doing dataset
-The What Are They Doing dataset is an open-ended scene reasoning question-answering dataset, where the models need to understand both audio and speech and reason what the speakeres are possibly doing. It contains 80 carefully-designed audio clips and QA pairs. The main features of the dataset are:
+The What Are They Doing dataset is an open-ended scene reasoning question-answering dataset, where the models need to understand both audio and speech and reason what the speakers are possibly doing. It contains 80 carefully designed audio clips and QA pairs. The main features of the dataset are:
 1. Both sound and human speech are present in the same audio clip.
 2. The correct answer is based on both audio and speech, using one single modality leads to Audio-Oriented or Speech-Oriented Answer.
-3. The correct answer requires a deep reasoning rather than a concatenation of information.
+3. The correct answer requires deep reasoning rather than simply concatenating information.
 4. The audio information and speech information are irrelevant.
 
-The dataset can be found in the `dataset` folder with the designed answers in the csv file. 
+The dataset can be found under `dataset/` with the designed answers in `v0.csv`. 
+😆Listen to the audio clips and make a guess yourself before checking the answers 😆.
 
-Listen to the audio clips and make a guess yourself before checking the answers 😆.
+## Evaluate your own ALLM
 
-## Inference with ALLMs
-For each sample, we give the model 8 different instructions and switch the position of "audio" and "speech" in the instruction.
+To run the evaluation, first install the dependencies
+```
+pip install -r requirements.txt
+```
+### 1. Generate responses with your own ALLM
+Infer with your own ALLM for each row in `evaluation/example.csv`, specifically:
+Take the column `audio` and the column `prompt`, generate the response and fill the column 'allm_output'.
+
+It should be noted that for each sample, we infer the model with 8 different instructions:
 ```
 Based on both the audio sound and the spoken text, infer what the speakers are doing specifically?
 Based on both the spoken text and the audio sound, infer what the speakers are doing specifically?
@@ -37,18 +45,30 @@ What sound can you hear? What does the speaker say? Guess what activity the spea
 What does the speaker say? What sound can you hear? Guess what activity the speakers are engaged in using both the spoken text and the audio sound.
 ```
 
-We refered to the following inference code provided in each repo:
+We do not provide ALLM inference code since it differs from one to another, as for the 4 ALLMs benchmarked in the paper, we referred to the following inference scripts:
 
 LTU-AS: https://github.com/YuanGongND/ltu?tab=readme-ov-file#option-2-inference-with-api-no-gpu-needed
-
 SALMONN: https://huggingface.co/tsinghua-ee/SALMONN-7B#how-to-inference-in-cli
-
 QWEN2: https://huggingface.co/Qwen/Qwen2-Audio-7B-Instruct#audio-analysis-inference
-
 WavLLM: https://github.com/microsoft/SpeechT5/tree/main/WavLLM#inference
 
-## Evaluation
-We use the Model-As-Judge approach to evaluate the models' capabilities on the JASCO task. We instruct the model judge to conduct 2 evaluations by giving a designed prompt:
+### 2. Score the responses with LLM-Judges
+Once the responses are generated and formatted into `evaluation/example.csv`, run:
+```
+cd evaluation/
+
+python eval.py meta-llama/Llama-3.1-70B-Instruct evaluation/example.csv llama_judge.csv  # outputs the results from the 1st judge
+python eval.py Qwen/Qwen2.5-72B-Instruct evaluation/example.csv qwen_judge.csv  # outputs the results from the 2nd judge
+python eval.py mistralai/Mistral-Large-Instruct-2411 evaluation/example.csv mistral_judge.csv  # outputs the results from the 3rd judge
+
+# The reported result should be the average of the 3 judges' scores
+```
+As the above indicates, 3 LLM-Judges are used to evaluate your ALLM's predictions:
+Llama-3.1-70B-Instruct: https://huggingface.co/meta-llama/Llama-3.1-70B-Instruct
+Qwen2.5-72B-Instruct: https://huggingface.co/Qwen/Qwen2.5-72B-Instruct
+Mistral-123B-Instruct: https://huggingface.co/mistralai/Mistral-Large-Instruct-2411
+
+The LLM-Judges are demanded to conduct 2 evaluations by receiving a designed prompt:
 ```
 [Audio Sound]
 {audio_sound}
@@ -97,7 +117,7 @@ Explanation2: (Provide a concise explanation of your choice among Audio-Oriented
 Orientation: Audio-Oriented/Speech-Oriented/Both/Neither
 ```
 
-Here we also show some outputs from Llama-3.1-70B-Instruct-as-judge:
+Here we show some evaluations from Llama-3.1-70B-Instruct Judge:
 ```
 ######################### Rating 0 + Audio-Oriented #########################
 Explanation1: The provided audio sound is joyful laughter and shouting, the provided spoken text is a message about children being accompanied by an adult at all times, the reference answer is that they are likely at a recreational facility or amusement park, the reference keywords are 'amusement park', while the model’s answer is 'They are laughing'. I think the model's prediction of the speaker's action is not aligned with the reference answer, as it only mentions the emotional state of the speakers but does not capture the specific action or setting.
@@ -140,36 +160,24 @@ The provided audio sound is rock music and the provided spoken text is "Let's ru
 Orientation: Both
 ```
 
-To run the evaluation code, first install the dependencies
-```
-pip install -r requirements.txt
-```
-Please first do inference yourself for your own ALLM and organize your outputs within a csv file such as `/evaluation/example.csv`, then run the evaluation:
-```
-cd evaluation/
-python eval.py {model_id} {input_file} {output_path}
-# python eval.py meta-llama/Meta-Llama-3.1-70B-Instruct example.csv llama3.1_70B.csv
-```
-
-
 ## Benchmark Results
-1. Model judge best-mean:
+1. Average best-mean of three judges:
 
 | model | best-mean |
 |:---------------------------:|:-----------:|
-| WavLLM-7B | 0.49 |
-| LTU-AS-7B | 1.04 |
-| SALMONN-7B | 1.21 |
-| Qwen2-Audio-Instruct-7B | 1.38 |
+| WavLLM-7B | 0.31 |
+| LTU-AS-7B | 0.99 |
+| SALMONN-7B | 1.10 |
+| Qwen2-Audio-Instruct-7B | 1.23 |
 
-2. Modality-Dependence
+2. Average Modality-Dependence of three judges:
 
 | model | Audio-Dependence% | Both-Dependence% | Speech-Dependence% |
 |:---------------------------:|:-------------------:|:-------------------:|:-------------------:|
-| WavLLM-7B | 9 | 17 | 74 |
-| LTU-AS-7B | 19 | 49 | 32 |
-| SALMONN-7B | 27 | 48 | 25 |
-| Qwen2-Audio-Instruct-7B | 13 | 56 | 31 |
+| WavLLM-7B | 12 | 11 | 77 |
+| LTU-AS-7B | 23 | 40 | 37 |
+| SALMONN-7B | 31 | 42 | 27 |
+| Qwen2-Audio-Instruct-7B | 16 | 50 | 34 |
 
 <img src="dependence.png" alt="ser_sed" style="width: 80%; min-width: 300px; display: block; margin: auto;">
 
