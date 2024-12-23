@@ -28,7 +28,7 @@ pip install -r requirements.txt
 ```
 ### 1. Generate responses with your own ALLM
 Infer with your own ALLM for each row in `evaluation/example.csv`, specifically:
-Take the column `audio` and the column `prompt`, generate the response and fill the column 'allm_output'.
+Take the column `audio` and the column `prompt`, generate the response and fill the column `allm_output`.
 
 It should be noted that for each sample, we infer the model with 8 different instructions:
 ```
@@ -47,10 +47,10 @@ What does the speaker say? What sound can you hear? Guess what activity the spea
 
 We do not provide ALLM inference code since it differs from one to another, as for the 4 ALLMs benchmarked in the paper, we referred to the following inference scripts:
 
-LTU-AS: https://github.com/YuanGongND/ltu?tab=readme-ov-file#option-2-inference-with-api-no-gpu-needed
-SALMONN: https://huggingface.co/tsinghua-ee/SALMONN-7B#how-to-inference-in-cli
-QWEN2: https://huggingface.co/Qwen/Qwen2-Audio-7B-Instruct#audio-analysis-inference
-WavLLM: https://github.com/microsoft/SpeechT5/tree/main/WavLLM#inference
+LTU-AS: https://github.com/YuanGongND/ltu?tab=readme-ov-file#option-2-inference-with-api-no-gpu-needed\n
+SALMONN: https://huggingface.co/tsinghua-ee/SALMONN-7B#how-to-inference-in-cli\n
+QWEN2: https://huggingface.co/Qwen/Qwen2-Audio-7B-Instruct#audio-analysis-inference\n
+WavLLM: https://github.com/microsoft/SpeechT5/tree/main/WavLLM#inference\n
 
 ### 2. Score the responses with LLM-Judges
 Once the responses are generated and formatted into `evaluation/example.csv`, run:
@@ -64,8 +64,9 @@ python eval.py mistralai/Mistral-Large-Instruct-2411 evaluation/example.csv mist
 # The reported result should be the average of the 3 judges' scores
 ```
 As the above indicates, 3 LLM-Judges are used to evaluate your ALLM's predictions:
-Llama-3.1-70B-Instruct: https://huggingface.co/meta-llama/Llama-3.1-70B-Instruct
-Qwen2.5-72B-Instruct: https://huggingface.co/Qwen/Qwen2.5-72B-Instruct
+
+Llama-3.1-70B-Instruct: https://huggingface.co/meta-llama/Llama-3.1-70B-Instruct\n
+Qwen2.5-72B-Instruct: https://huggingface.co/Qwen/Qwen2.5-72B-Instruct\n
 Mistral-123B-Instruct: https://huggingface.co/mistralai/Mistral-Large-Instruct-2411
 
 The LLM-Judges are demanded to conduct 2 evaluations by receiving a designed prompt:
