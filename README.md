@@ -190,10 +190,14 @@ Orientation: Both
 ## **Cite our work**
 
 ```bibtex
-@article{wang2024they,
-  title={What Are They Doing? Joint Audio-Speech Co-Reasoning},
+@INPROCEEDINGS{10889092,
   author={Wang, Yingzhi and Mousavi, Pooneh and Ploujnikov, Artem and Ravanelli, Mirco},
-  journal={arXiv preprint arXiv:2409.14526},
-  year={2024}
-}
+  booktitle={ICASSP 2025 - 2025 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP)}, 
+  title={What Are They Doing? Joint Audio-Speech Co-Reasoning}, 
+  year={2025},
+  volume={},
+  number={},
+  pages={1-5},
+  keywords={Analytical models;Large language models;Benchmark testing;Signal processing;Acoustics;Speech processing;Auditory LLM;Joint Audio-Speech Co-Reasoning;What Are They Doing dataset},
+  doi={10.1109/ICASSP49660.2025.10889092}}
 ```
